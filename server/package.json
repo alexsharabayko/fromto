@@ -1,0 +1,12 @@
+{
+  "name": "fromto-server",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "gulp": "^3.9.0",
+    "gulp-node-debug": "0.0.3",
+    "gulp-supervisor": "^0.1.2",
+    "mongoose": "*"
+  }
+}
