@@ -3,6 +3,8 @@ var nodeDebug = require('gulp-node-debug');
 var supervisor = require( "gulp-supervisor" );
 var exec = require('child_process').exec;
 
+var indexFileName = 'index.js';
+
 gulp.task('start-mongo', function () {
     exec('cd server/mongodb/bin/; ./mongod;', function () {
         console.log('Hello');
@@ -10,7 +12,7 @@ gulp.task('start-mongo', function () {
 });
 
 gulp.task('debug', function () {
-    gulp.src(['server.js'])
+    gulp.src([indexFileName])
         .pipe(nodeDebug({
             debugPort: 5858,
             webHost: '0.0.0.0',
@@ -19,7 +21,7 @@ gulp.task('debug', function () {
 });
 
 gulp.task('supervisor-simple', function() {
-    supervisor('server.js', {
+    supervisor(indexFileName, {
         debug: true
     } );
 });
