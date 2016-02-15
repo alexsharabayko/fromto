@@ -63,15 +63,16 @@ UserSchema.path('role').validate(function (role) {
     return ['passenger', 'driver', 'admin'].indexOf(role) > -1;
 }, 'The role can be only "passenger"');
 
-
-UserSchema.methods.generateHash = function (password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+UserSchema.methods.getPublicFields = function () {
+    return {
+        username: this.username,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        role: this.role,
+        token: this.token
+    };
 };
-
-UserSchema.methods.validPassword = function (password) {
-    return bcrypt.compareSync(password, this.password);
-};
-
 
 UserSchema.plugin(uniqueValidator);
 

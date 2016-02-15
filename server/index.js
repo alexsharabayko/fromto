@@ -1,5 +1,4 @@
-var express = require('express'),
-    app = express(),
+var app = require('express')(),
     port = 1993,
     mongoose = require('mongoose'),
     bodyParser = require('body-parser');
@@ -13,6 +12,7 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 app.use('/', require('./routes/user.js'));

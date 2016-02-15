@@ -3,6 +3,7 @@ var express = require('express'),
     path = require('path'),
     multiparty = require('multiparty'),
     cloudinary = require('cloudinary'),
+    uid = require('uid'),
     User = require('../models/user.js');
 
 cloudinary.config({
@@ -64,8 +65,6 @@ var uploadAvatarToCDN = function (req, res, next) {
 var saveNewUser = function (req, res, next) {
     var user = new User(req.user);
 
-    user.password = user.generateHash(user.password);
-
     user.save(function (err) {
         err ? res.status(500).send(err) : next();
     });
@@ -74,7 +73,72 @@ var saveNewUser = function (req, res, next) {
 
 
 router.route('/register').post(parseFormData, uploadAvatarToCDN, saveNewUser, function (req, res) {
-        res.json({ message: 'Ok' });
+    res.json({ message: 'Ok' });
+});
+
+
+var findUser = function (req, res, next) {
+    var query = {};
+
+    if (req.body.username && req.body.password) {
+    }
+};
+
+var userSelect = {
+    username: 1,
+    firstName: 1,
+    lastName: 1,
+    email: 1,
+    role: 1,
+    token: 1
+};
+
+router.route('/login').post(function (req, res) {
+    var username = req.body.username,
+        password = req.body.password,
+        token = uid(16);
+
+    User.findOneAndUpdate({ username: username, password: password }, { token: token }).select(userSelect).exec(function (err, user) {
+        if (err || !user) {
+            return res.status(500).send({ message: 'User not found' });
+        }
+
+        user.token = token;
+
+        res.send(user);
     });
+});
+
+router.route('/loginByToken').post(function (req, res) {
+    var token = req.body.token;
+
+    if (!token) {
+        return res.status(500).send({ message: 'Bad token' });
+    }
+
+    User.findOne({ token: token }).select(userSelect).exec(function (err, user) {
+        if (err || !user) {
+            return res.status(500).send({ message: 'User not found' });
+        }
+
+        res.send(user);
+    });
+});
+
+router.route('/logout').post(function (req, res) {
+    var token = req.body.token;
+
+    if (!token) {
+        return res.status(500).send({ message: 'Bad token' });
+    }
+
+    User.findOneAndUpdate({ token: token }, { token: '' }).exec(function (err, user) {
+        if (err || !user) {
+            return res.status(500).send({ message: 'User not found' });
+        }
+
+        res.send({ message: 'Ok' });
+    });
+});
 
 module.exports = router;

@@ -12,6 +12,7 @@
     "mongoose": "*",
     "mongoose-unique-validator": "^0.6.2",
     "multiparty": "^4.1.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "uid": "0.0.2"
   }
 }
