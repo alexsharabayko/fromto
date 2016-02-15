@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 app.use('/', require('./routes/user.js'));
-//app.use('/', require('./routes/product-route.js'));
+app.use('/', require('./routes/place.js'));
 //app.use('/', require('./routes/dish-route.js'));
 //app.use('/', require('./routes/dish-property-route.js'));
 
