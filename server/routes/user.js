@@ -12,6 +12,38 @@ cloudinary.config({
     api_secret: 'QSfpwFxgACzH0kbKQPe-3dRrOaI'
 });
 
+//-------------------- COMMON METHODS START --------------------------------------------------------
+
+/**
+ * Send successful message to client
+ * @param req
+ * @param res
+ */
+var sendOk = function (req, res) {
+    res.json({ message: 'Ok' });
+};
+
+/**
+ * Send user to client
+ * @param req
+ * @param res
+ */
+var sendUser = function (req, res) {
+    res.send(req.user.getPublicFields());
+};
+
+//-------------------- COMMON METHODS END --------------------------------------------------------
+
+
+
+//-------------------- REGISTER METHODS START ----------------------------------------------------
+
+/**
+ * Parse user data from request
+ * @param req
+ * @param res
+ * @param next
+ */
 var parseFormData = function (req, res, next) {
     var form = new multiparty.Form({
         uploadDir: path.dirname(process.mainModule.filename) + '/user_files'
@@ -34,6 +66,12 @@ var parseFormData = function (req, res, next) {
     });
 };
 
+/**
+ * Save avatar on CDN using user data
+ * @param req
+ * @param res
+ * @param next
+ */
 var uploadAvatarToCDN = function (req, res, next) {
     var user = req.user,
         crop = null;
@@ -62,6 +100,12 @@ var uploadAvatarToCDN = function (req, res, next) {
     }
 };
 
+/**
+ * Save new user to database
+ * @param req
+ * @param res
+ * @param next
+ */
 var saveNewUser = function (req, res, next) {
     var user = new User(req.user);
 
@@ -70,75 +114,127 @@ var saveNewUser = function (req, res, next) {
     });
 };
 
+/**
+ * Listen register request
+ */
+router.route('/register').post(parseFormData, uploadAvatarToCDN, saveNewUser, sendOk);
+
+//-------------------- REGISTER METHODS END ----------------------------------------------------
 
 
-router.route('/register').post(parseFormData, uploadAvatarToCDN, saveNewUser, function (req, res) {
-    res.json({ message: 'Ok' });
-});
+//-------------------- LOGIN METHODS START -----------------------------------------------------
 
-
-var findUser = function (req, res, next) {
-    var query = {};
-
-    if (req.body.username && req.body.password) {
-    }
-};
-
-var userSelect = {
-    username: 1,
-    firstName: 1,
-    lastName: 1,
-    email: 1,
-    role: 1,
-    token: 1
-};
-
-router.route('/login').post(function (req, res) {
+/**
+ * Find user using credentials from request
+ * @param req
+ * @param res
+ * @param next
+ */
+var findUserByCreds = function (req, res, next) {
     var username = req.body.username,
-        password = req.body.password,
-        token = uid(16);
+        password = req.body.password;
 
-    User.findOneAndUpdate({ username: username, password: password }, { token: token }).select(userSelect).exec(function (err, user) {
+    User.findOne({ username: username, password: password }, function (err, user) {
         if (err || !user) {
             return res.status(500).send({ message: 'User not found' });
         }
 
-        user.token = token;
+        req.user = user;
 
-        res.send(user);
+        next();
     });
-});
+};
 
-router.route('/loginByToken').post(function (req, res) {
+/**
+ * If user haven't got token, save it
+ * @param req
+ * @param res
+ * @param next
+ */
+var saveTokenIfNeed = function (req, res, next) {
+    var user = req.user;
+
+    if (!user.token) {
+        user.token = uid(16);
+
+        user.save(function (err, user) {
+            if (err) {
+                return res.status(500).send({ message: 'Internal server error' })
+            }
+
+            req.user = user;
+
+            next();
+        });
+    } else {
+        next();
+    }
+};
+
+/**
+ * Listen login request
+ */
+router.route('/login').post(findUserByCreds, saveTokenIfNeed, sendUser);
+
+//-------------------- LOGIN METHODS END -----------------------------------------------------
+
+//-------------------- TOKEN METHODS START (LOGOUT AND LOGIN BY TOKEN) -----------------------
+
+/**
+ * Find user by token from request
+ * @param req
+ * @param res
+ * @param next
+ */
+var findUserByToken = function (req, res, next) {
     var token = req.body.token;
 
     if (!token) {
         return res.status(500).send({ message: 'Bad token' });
     }
 
-    User.findOne({ token: token }).select(userSelect).exec(function (err, user) {
+    User.findOne({ token: token }, function (err, user) {
         if (err || !user) {
             return res.status(500).send({ message: 'User not found' });
         }
 
-        res.send(user);
+        req.user = user;
+
+        next();
     });
-});
+};
 
-router.route('/logout').post(function (req, res) {
-    var token = req.body.token;
+/**
+ * Listen login by token request
+ */
+router.route('/loginByToken').post(findUserByToken, sendUser);
 
-    if (!token) {
-        return res.status(500).send({ message: 'Bad token' });
-    }
+/**
+ * Drop user token
+ * @param req
+ * @param res
+ * @param next
+ */
+var saveEmptyToken = function (req, res, next) {
+    var user = req.user;
 
-    User.findOneAndUpdate({ token: token }, { token: '' }).exec(function (err, user) {
-        if (err || !user) {
-            return res.status(500).send({ message: 'User not found' });
+    user.token = '';
+
+    user.save(function (err, user) {
+        if (err) {
+            return res.status(500).send({ message: 'Internal server error' })
         }
 
-        res.send({ message: 'Ok' });
+        req.user = user;
+        next();
     });
-});
+};
+
+/**
+ * Listen logout request
+ */
+router.route('/logout').post(findUserByToken, saveEmptyToken, sendOk);
+
+//-------------------- TOKEN METHODS END (LOGOUT AND LOGIN BY TOKEN) -----------------------
 
 module.exports = router;

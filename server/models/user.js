@@ -3,6 +3,9 @@ var mongoose = require('mongoose'),
     uniqueValidator = require('mongoose-unique-validator'),
     Schema = mongoose.Schema;
 
+/**
+ * User mongoose schema
+ */
 var UserSchema = new Schema({
     username: {
         type: String,
@@ -41,7 +44,9 @@ var UserSchema = new Schema({
     updatedAt: Date
 });
 
-
+/**
+ * Save dates for user before save
+ */
 UserSchema.pre('save', function (next) {
     if (!this.createdAt) {
         this.createdAt = Date.now();
@@ -52,17 +57,26 @@ UserSchema.pre('save', function (next) {
     next();
 });
 
-
+/**
+ * Email valiadtion
+ */
 UserSchema.path('email').validate(function (email) {
     var emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     return emailRegex.test(email);
 }, 'The e-mail field has bad pattern.');
 
+/**
+ * Role validation
+ */
 UserSchema.path('role').validate(function (role) {
     return ['passenger', 'driver', 'admin'].indexOf(role) > -1;
 }, 'The role can be only "passenger"');
 
+/**
+ * Get public fields of user model for sending to client
+ * @returns {{username: *, firstName: *, lastName: *, email: *, role: *, token: *}}
+ */
 UserSchema.methods.getPublicFields = function () {
     return {
         username: this.username,
@@ -74,7 +88,9 @@ UserSchema.methods.getPublicFields = function () {
     };
 };
 
+/**
+ * Beautify unique validation errors
+ */
 UserSchema.plugin(uniqueValidator);
-
 
 module.exports = mongoose.model('User', UserSchema);
