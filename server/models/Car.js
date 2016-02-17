@@ -10,8 +10,13 @@ var CarSchema = new Schema({
         type: Number,
         required: true
     },
+    carNumber: {
+        type: String,
+        required: true
+    },
+
     photos: {
-        type: [Object],
+        type: [],
         'default': []
     },
 
@@ -39,6 +44,7 @@ var CarSchema = new Schema({
     mark: String,
     model: String,
     yearOfIssue: Number,
+    color: String,
 
     createdAt: Date,
     updatedAt: Date

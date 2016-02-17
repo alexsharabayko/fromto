@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 app.use('/', require('./routes/user.js'));
 app.use('/', require('./routes/place.js'));
-//app.use('/', require('./routes/dish-route.js'));
+app.use('/', require('./routes/car.js'));
 //app.use('/', require('./routes/dish-property-route.js'));
 
 app.listen(port);
