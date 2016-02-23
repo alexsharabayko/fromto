@@ -1,9 +1,14 @@
 import React from 'react';
+import BaseComponent from '../base-container';
 
-class App extends React.Component {
+import './style.less';
+
+class App extends BaseComponent {
     render() {
         return (
-            <FuelSavingsApp appState={this.props.appState} actions={this.props.actions}/>
+            <p>Hello world!</p>
         );
     }
 }
+
+export default App;
