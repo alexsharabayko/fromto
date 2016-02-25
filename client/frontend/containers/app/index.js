@@ -3,7 +3,6 @@ import BaseComponent from '../base-container';
 
 import Language from 'constants/languages';
 var l = new Language('ru');
-debugger;
 
 import './style.less';
 
