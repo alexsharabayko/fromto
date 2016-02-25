@@ -4,45 +4,17 @@ const webpack = require('webpack');
 module.exports = {
     context: __dirname + '/frontend',
 
-    entry: {
-        index:  ['webpack-dev-server/client', 'webpack/hot/dev-server', './index']
+    entry: {  // --inline --hot
+        index: './index'
     },
 
     output: {
         path: __dirname + '/public',
-        publicPath: '/fromto/public/',
-        filename: "[name].js",
-        library: "[name]"
+        publicPath: '/',
+        filename: '[name].js'
     },
-
-    //watch: NODE_ENV === 'development',
-    //
-    //watchOptions: {
-    //    aggregateTimeout: 100
-    //},
 
     devtool: NODE_ENV === 'development' ? "cheap-inline-module-source-map" : null,
-
-    plugins: [
-        new webpack.NoErrorsPlugin(),
-        new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify(NODE_ENV),
-            LANG: JSON.stringify('ru')
-        }),
-        new webpack.HotModuleReplacementPlugin()
-    ],
-
-    resolve: {
-        modulesDirectories: ['frontend', 'node_modules'],
-        extensions: ['', '.js', '.less']
-    },
-
-    resolveLoader: {
-        modulesDirectories: ['node_modules'],
-        moduleTemplates: ['*-loader', '*'],
-        extensions: ['', '.js', '.less']
-    },
-
 
     module: {
         loaders: [
@@ -68,14 +40,38 @@ module.exports = {
         ]
     },
 
+    plugins: [
+        new webpack.NoErrorsPlugin(),
+        new webpack.DefinePlugin({
+            NODE_ENV: JSON.stringify(NODE_ENV),
+            LANG: JSON.stringify('ru')
+        })
+    ],
+
+    resolve: {
+        modulesDirectories: ['frontend', 'node_modules'],
+        extensions: ['', '.js', '.less']
+    },
+
+    resolveLoader: {
+        modulesDirectories: ['node_modules'],
+        moduleTemplates: ['*-loader', '*'],
+        extensions: ['', '.js', '.less']
+    },
+
     devServer: {
         host: 'localhost',
         port: 4444,
         contentBase: __dirname + '/public',
         hot: true
     }
-};
 
+    //watch: NODE_ENV === 'development',
+    //
+    //watchOptions: {
+    //    aggregateTimeout: 100
+    //},
+};
 
 if (NODE_ENV == 'production') {
     module.exports.plugins.push(

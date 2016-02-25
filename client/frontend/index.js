@@ -10,6 +10,8 @@ import Home from './containers/home';
 
 import reducers from './reducers'
 
+var i;
+
 const store = createStore(
     combineReducers({
         ...reducers,
@@ -24,7 +26,6 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={Home} />
-            <Route path="*" component={Home} />
         </Router>
     </Provider>,
     document.getElementById('app')

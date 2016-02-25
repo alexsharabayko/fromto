@@ -13,7 +13,7 @@ class Home extends BaseComponent {
 
     render() {
         return (
-            <p>Hello world from all!</p>
+            <p>Hello world from home again!</p>
         );
     }
 }
@@ -31,7 +31,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(actions, dispatch)
+        //actions: bindActionCreators(actions, dispatch)
     };
 }
 
