@@ -1,14 +1,29 @@
 import React from 'react';
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom'
+
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux';
-import App from './containers/app';
-import configureStore from './store';
+import { Router, Route, browserHistory } from 'react-router'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-const store = configureStore();
+import Home from './containers/home';
 
-render(
+import reducers from './reducers'
+
+const store = createStore(
+    combineReducers({
+        ...reducers,
+        routing: routerReducer
+    })
+);
+
+const history = syncHistoryWithStore(browserHistory, store);
+
+ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Router history={history}>
+            <Route path="/fromto/client/public/index.html" component={Home} />
+        </Router>
     </Provider>,
     document.getElementById('app')
 );
