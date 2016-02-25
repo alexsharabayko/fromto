@@ -5,7 +5,7 @@ module.exports = {
     context: __dirname + '/frontend',
 
     entry: {
-        index:  "./index"
+        index:  ['webpack-dev-server/client', 'webpack/hot/dev-server', './index']
     },
 
     output: {
@@ -15,11 +15,11 @@ module.exports = {
         library: "[name]"
     },
 
-    watch: NODE_ENV === 'development',
-
-    watchOptions: {
-        aggregateTimeout: 100
-    },
+    //watch: NODE_ENV === 'development',
+    //
+    //watchOptions: {
+    //    aggregateTimeout: 100
+    //},
 
     devtool: NODE_ENV === 'development' ? "cheap-inline-module-source-map" : null,
 
@@ -28,7 +28,8 @@ module.exports = {
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV),
             LANG: JSON.stringify('ru')
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ],
 
     resolve: {
@@ -65,6 +66,13 @@ module.exports = {
                 loader: 'json'
             }
         ]
+    },
+
+    devServer: {
+        host: 'localhost',
+        port: 4444,
+        contentBase: __dirname + '/public',
+        hot: true
     }
 };
 

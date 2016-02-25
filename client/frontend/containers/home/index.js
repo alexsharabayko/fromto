@@ -13,7 +13,7 @@ class Home extends BaseComponent {
 
     render() {
         return (
-            <p>Hello world from home!</p>
+            <p>Hello world from all!</p>
         );
     }
 }

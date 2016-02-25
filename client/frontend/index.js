@@ -19,10 +19,12 @@ const store = createStore(
 
 const history = syncHistoryWithStore(browserHistory, store);
 
+
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
-            <Route path="/fromto/client/public/index.html" component={Home} />
+            <Route path="/" component={Home} />
+            <Route path="*" component={Home} />
         </Router>
     </Provider>,
     document.getElementById('app')
