@@ -8,7 +8,7 @@ const store = configureStore();
 
 render(
     <Provider store={store}>
-        <App />,
+        <App />
     </Provider>,
     document.getElementById('app')
 );
