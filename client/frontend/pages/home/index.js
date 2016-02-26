@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
-import BaseComponent from '../base-container';
+import PageComponent from 'core/page-component';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from 'actions/home-actions';
 
 import './style.less';
 
-class Home extends BaseComponent {
+class HomePage extends PageComponent {
     componentDidMount () {
         super.componentDidMount();
     }
@@ -38,4 +38,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Home);
+)(HomePage);

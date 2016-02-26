@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Base extends React.Component {
+class BaseComponent extends React.Component {
     constructor (props) {
         super(props);
     }
@@ -10,4 +10,4 @@ class Base extends React.Component {
     }
 }
 
-export default Base;
+export default BaseComponent;
