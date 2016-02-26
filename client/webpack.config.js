@@ -5,6 +5,7 @@ module.exports = {
     context: __dirname + '/frontend',
 
     entry: {  // --inline --hot
+        //index: ['webpack-dev-server/client', 'webpack/hot/dev-server', './index']
         index: './index'
     },
 
@@ -46,6 +47,7 @@ module.exports = {
             NODE_ENV: JSON.stringify(NODE_ENV),
             LANG: JSON.stringify('ru')
         })
+        //new webpack.HotModuleReplacementPlugin()
     ],
 
     resolve: {

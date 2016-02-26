@@ -13,7 +13,7 @@ class HomePage extends PageComponent {
 
     render() {
         return (
-            <p>Hello world from home again!</p>
+            <p className="goro">Hello world from home again!</p>
         );
     }
 }

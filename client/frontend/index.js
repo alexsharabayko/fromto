@@ -10,6 +10,8 @@ import HomePage from './pages/home';
 
 import reducers from './reducers';
 
+import './less/common.less';
+
 const store = createStore(
     combineReducers({
         ...reducers,
