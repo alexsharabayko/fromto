@@ -1,10 +1,12 @@
+// webpack-dev-server --inline --hot --history-api-fallback
+
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const webpack = require('webpack');
 
 module.exports = {
     context: __dirname + '/frontend',
 
-    entry: {  // --inline --hot
+    entry: {
         //index: ['webpack-dev-server/client', 'webpack/hot/dev-server', './index']
         index: './index'
     },
@@ -65,7 +67,8 @@ module.exports = {
         host: 'localhost',
         port: 4444,
         contentBase: __dirname + '/public',
-        hot: true
+        hot: true,
+        historyApiFallback: true
     }
 
     //watch: NODE_ENV === 'development',

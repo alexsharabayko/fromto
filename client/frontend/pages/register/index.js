@@ -6,14 +6,14 @@ import * as actions from 'actions/home-actions';
 
 import './style.less';
 
-class HomePage extends PageComponent {
+class RegisterPage extends PageComponent {
     componentDidMount () {
         super.componentDidMount();
     }
 
     render() {
         return (
-            <p className="goro">Hello world from home again! <a href="/register">Go to register</a></p>
+            <p>Registration</p>
         );
     }
 }
@@ -38,4 +38,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(HomePage);
+)(RegisterPage);
