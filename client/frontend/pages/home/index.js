@@ -7,13 +7,23 @@ import * as actions from 'actions/home-actions';
 import './style.less';
 
 class HomePage extends PageComponent {
-    componentDidMount () {
-        super.componentDidMount();
+    constructor (props) {
+        super(props);
+
+        this.state = {
+            title: this.props.homeState.title
+        };
     }
 
     render() {
         return (
-            <p className="goro">Hello world from home again! <a href="/register">Go to register</a></p>
+            <div className="home">
+                <div className="home-tape">
+                    <div className="home-intro home-tape_item">
+                        <h1>Какой-то текст</h1>
+                    </div>
+                </div>
+            </div>
         );
     }
 }

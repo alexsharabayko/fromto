@@ -6,7 +6,7 @@ class BaseComponent extends React.Component {
     }
 
     componentDidMount () {
-        document.querySelector('head title').innerHTML = this.props.title || 'From - To';
+        document.querySelector('head title').innerHTML = this.state.title || 'From - To';
     }
 }
 
