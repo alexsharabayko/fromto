@@ -121,7 +121,7 @@ a {
 }
 @font-face {
   font-family: Roboto;
-  src: url(~fonts/Roboto/Roboto-BalckItalic.ttf);
+  src: url(~fonts/Roboto/Roboto-BlackItalic.ttf);
   font-weight: 900;
   font-style: italic;
 }
@@ -144,6 +144,25 @@ html, body {
 }
 .clearfix:after {
   clear: both;
+}
+
+.image-wrapper {
+  text-align: center;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  img {
+    display: inline-block;
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+  }
 }
 
 // -------------------------- COMMON END ----------------------------------

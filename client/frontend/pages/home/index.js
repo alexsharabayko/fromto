@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from 'actions/home-actions';
 
+import LogoComponent from 'core/logo';
+
 import './style.less';
 
 class HomePage extends PageComponent {
@@ -20,7 +22,7 @@ class HomePage extends PageComponent {
             <div className="home">
                 <div className="home-tape">
                     <div className="home-intro home-tape_item">
-                        <h1>Какой-то текст</h1>
+                        <LogoComponent />
                     </div>
                 </div>
             </div>
