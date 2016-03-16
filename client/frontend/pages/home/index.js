@@ -17,13 +17,21 @@ class HomePage extends PageComponent {
         };
     }
 
+    scrollHomeTape (event) {
+        event.preventDefault();
+
+        event.currentTarget.scrollLeft -= event.nativeEvent.wheelDelta;
+    }
+
     render() {
         return (
-            <div className="home">
+            <div className="home" onWheel={this.scrollHomeTape}>
                 <div className="home-tape">
                     <div className="home-intro home-tape_item">
                         <LogoComponent />
                     </div>
+                    <div className="home-login home-tape_item"></div>
+                    <div className="home-contacts home-tape_item"></div>
                 </div>
             </div>
         );

@@ -1,16 +1,17 @@
-@import "../../less/variabless";
-
 .home {
   height: 100%;
-  overflow: hidden;
+  overflow-y: hidden;
 
   &-tape {
     height: 100%;
-    width: 100%;
+    width: 300%;
+    font-size: 0;
 
     &_item {
+      display: inline-block;
       height: 100%;
-      width: 100%;
+      width: 33.3333%;
+      vertical-align: top;
     }
   }
 
@@ -30,5 +31,13 @@
         display: block;
       }
     }
+  }
+
+  &-login {
+    background-color: #b3a1d7;
+  }
+
+  &-contacts {
+    background-color: #81c4d0;
   }
 }
