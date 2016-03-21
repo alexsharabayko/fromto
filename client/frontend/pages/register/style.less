@@ -126,6 +126,32 @@
           display: none;
         }
       }
+
+
+      &_radio {
+        margin-right: 1rem;
+        font-size: 4rem;
+
+        input {
+          display: none;
+
+          &:checked ~ i,
+          &:checked ~ .text {
+            color: rgba(170, 227, 35, 1);
+          }
+        }
+
+        i,
+        .text {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        .text {
+          margin-left: 0.5rem;
+          font-size: 1.6rem;
+        }
+      }
     }
   }
 }
