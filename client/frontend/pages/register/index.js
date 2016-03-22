@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import PageComponent from 'core/page-component';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from 'actions/home-actions';
+import * as actions from 'actions/register-actions';
 import LogoComponent from 'core/logo';
 import FileUploadComponent from 'core/file-upload';
 
@@ -20,11 +20,19 @@ class RegisterPage extends PageComponent {
 
         Array.from(this.refs.form.elements).forEach((element) => {
             element.addEventListener('invalid', (event) => {
-                event.target.parentElement.classList.add('invalid');
+                console.log('invalid');
 
                 event.target.setCustomValidity('');
             });
         });
+    }
+
+    changeGoro () {
+        this.props.actions.goro('2323');
+    }
+
+    removeEmptyClass (event) {
+        event.target.classList.remove('empty');
     }
 
     render() {
@@ -36,50 +44,38 @@ class RegisterPage extends PageComponent {
                         <span className="register-logo_small">Registration</span>
                     </div>
 
-                    <form className="register-form" ref="form">
+                    <form className="register-form" ref="form" onBlur={this.removeEmptyClass.bind(this)}>
                         <div className="register-form_field">
-                            <input className="register-form_field_input" type="text" required minLength="10" maxLength="6"/>
+                            <input className="register-form_field_input empty" type="text" required/>
                             <span className="register-form_field_label">Username</span>
                             <span className="register-form_field_error">Error validation message</span>
-                            <span className="register-form_field_info">Success info</span>
                         </div>
 
-                        <div className="register-form_field valid">
-                            <input className="register-form_field_input" type="password"/>
+                        <div className="register-form_field">
+                            <input className="register-form_field_input empty" type="password" required/>
                             <span className="register-form_field_label">Password</span>
                             <span className="register-form_field_error">Error validation message</span>
-                            <span className="register-form_field_info">Success info</span>
                         </div>
 
                         <div className="register-form_field">
-                            <input className="register-form_field_input" type="email"/>
+                            <input className="register-form_field_input empty" type="email" required/>
                             <span className="register-form_field_label">Email</span>
                             <span className="register-form_field_error">Error validation message</span>
-                            <span className="register-form_field_info">Success info</span>
                         </div>
 
-                        <div className="register-form_field invalid">
-                            <input className="register-form_field_input" type="text"/>
+                        <div className="register-form_field">
+                            <input className="register-form_field_input empty" type="text" required/>
                             <span className="register-form_field_label">First name</span>
                             <span className="register-form_field_error">Error validation message</span>
-                            <span className="register-form_field_info">Success info</span>
                         </div>
 
                         <div className="register-form_field">
-                            <input className="register-form_field_input" type="text"/>
+                            <input className="register-form_field_input empty" type="text" required/>
                             <span className="register-form_field_label">Last name</span>
                             <span className="register-form_field_error">Error validation message</span>
-                            <span className="register-form_field_info">Success info</span>
                         </div>
 
-                        <div className="register-form_field">
-                            <input className="register-form_field_input" type="text"/>
-                            <span className="register-form_field_label">Username</span>
-                            <span className="register-form_field_error">Error validation message</span>
-                            <span className="register-form_field_info">Success info</span>
-                        </div>
-
-                        <div className="register-form_field">
+                        <div className="register-form_field col-70 stick">
                             <label className="register-form_field_radio">
                                 <input type="radio" name="go"/>
                                 <i className="fa fa-cab"></i>
@@ -90,14 +86,14 @@ class RegisterPage extends PageComponent {
                                 <i className="fa fa-user"></i>
                                 <span className="text">Passenger</span>
                             </label>
-                            <span className="register-form_field_label fixed">Register me as</span>
+                            <span className="register-form_field_label">Register me as</span>
                         </div>
 
-                        <div className="register-form_field">
+                        <div className="register-form_field col-30">
                             <FileUploadComponent />
                         </div>
 
-                        <button>Submit</button>
+                        <button className="register-form_submit">Submit</button>
                     </form>
                 </div>
             </div>
@@ -112,13 +108,13 @@ class RegisterPage extends PageComponent {
 
 function mapStateToProps(state) {
     return {
-        homeState: state.homeState
+        registerState: state.registerState
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        //actions: bindActionCreators(actions, dispatch)
+        actions: bindActionCreators(actions, dispatch)
     };
 }
 
