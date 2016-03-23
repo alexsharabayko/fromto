@@ -15,24 +15,37 @@ class RegisterPage extends PageComponent {
         this.state = {};
     }
 
-    componentDidMount () {
-        super.componentDidMount();
-
-        Array.from(this.refs.form.elements).forEach((element) => {
-            element.addEventListener('invalid', (event) => {
-                console.log('invalid');
-
-                event.target.setCustomValidity('');
-            });
-        });
-    }
-
     changeGoro () {
         this.props.actions.goro('2323');
     }
 
-    removeEmptyClass (event) {
-        event.target.classList.remove('empty');
+    removeEmptyClass (field) {
+        this.props.actions.setVisited(field.name);
+    }
+
+    handleFieldChange (event) {
+
+    }
+
+    createInputClass (field) {
+        return `register-form_field_input ${field && field.visited ? '' : 'empty'}`;
+    }
+
+    renderFields () {
+        var fields = this.props.registerState.fields;
+
+        return fields.map(field => {
+            return (
+                <div className="register-form_field" key={field.name}
+                     onBlur={this.removeEmptyClass.bind(this, field)} onChange={this.handleFieldChange.bind(this)}>
+
+                    <input className={this.createInputClass(field)} type={field.type}
+                           required minLength={field.minLength} maxLength={field.maxLength} pattern={field.pattern}/>
+                    <span className="register-form_field_label">{field.title}</span>
+                    <span className="register-form_field_error">{field.errorMessage}</span>
+                </div>
+            );
+        });
     }
 
     render() {
@@ -45,39 +58,11 @@ class RegisterPage extends PageComponent {
                     </div>
 
                     <form className="register-form" ref="form" onBlur={this.removeEmptyClass.bind(this)}>
-                        <div className="register-form_field">
-                            <input className="register-form_field_input empty" type="text" required/>
-                            <span className="register-form_field_label">Username</span>
-                            <span className="register-form_field_error">Error validation message</span>
-                        </div>
-
-                        <div className="register-form_field">
-                            <input className="register-form_field_input empty" type="password" required/>
-                            <span className="register-form_field_label">Password</span>
-                            <span className="register-form_field_error">Error validation message</span>
-                        </div>
-
-                        <div className="register-form_field">
-                            <input className="register-form_field_input empty" type="email" required/>
-                            <span className="register-form_field_label">Email</span>
-                            <span className="register-form_field_error">Error validation message</span>
-                        </div>
-
-                        <div className="register-form_field">
-                            <input className="register-form_field_input empty" type="text" required/>
-                            <span className="register-form_field_label">First name</span>
-                            <span className="register-form_field_error">Error validation message</span>
-                        </div>
-
-                        <div className="register-form_field">
-                            <input className="register-form_field_input empty" type="text" required/>
-                            <span className="register-form_field_label">Last name</span>
-                            <span className="register-form_field_error">Error validation message</span>
-                        </div>
+                        {this.renderFields()}
 
                         <div className="register-form_field col-70 stick">
                             <label className="register-form_field_radio">
-                                <input type="radio" name="go"/>
+                                <input type="radio" name="go" defaultChecked/>
                                 <i className="fa fa-cab"></i>
                                 <span className="text">Driver</span>
                             </label>

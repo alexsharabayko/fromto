@@ -5,3 +5,7 @@ export function hello(settings) {
 export function goro (text) {
     return { type: 'GORO', text };
 }
+
+export function setVisited (fieldName) {
+    return { type: 'SET_VISITED', fieldName };
+}
