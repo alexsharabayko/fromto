@@ -1,3 +1,5 @@
+import language from 'constants/languages';
+
 const initialState = {
     title: 'Register page',
     goro: 'Goro 22',
@@ -5,7 +7,7 @@ const initialState = {
     fields: [
         {
             name: 'username',
-            title: 'Username',
+            title: language.translate('register.username.title'),
             type: 'text',
             visited: false,
             pattern: '^[a-zA-Z0-9]+$',
@@ -15,7 +17,7 @@ const initialState = {
         },
         {
             name: 'password',
-            title: 'Password',
+            title: language.translate('register.password.title'),
             type: 'password',
             visited: false,
             pattern: '^[a-zA-Z0-9!@#$%^&*()_+=-]+$',
@@ -25,7 +27,7 @@ const initialState = {
         },
         {
             name: 'email',
-            title: 'Email',
+            title: language.translate('register.email.title'),
             type: 'email',
             visited: false,
             pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$',
@@ -33,7 +35,7 @@ const initialState = {
         },
         {
             name: 'firstName',
-            title: 'First Name',
+            title: language.translate('register.firstName.title'),
             type: 'text',
             visited: false,
             pattern: null,
@@ -42,7 +44,7 @@ const initialState = {
         },
         {
             name: 'lastName',
-            title: 'Last Name',
+            title: language.translate('register.lastName.title'),
             type: 'text',
             visited: false,
             pattern: null,

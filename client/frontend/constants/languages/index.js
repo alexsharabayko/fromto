@@ -1,23 +1,22 @@
-var currentLanguage;
+import config from 'config';
 
-//export default (language = 'ru') => {
-//    if (currentLanguage !== language) {
-//
-//    } else {
-//
-//    }
-//
-//    var obj = require('./' + language + '.json');
-//
-//    debugger;
-//};
+var langCodes = ['en', 'ru'];
+var constants = {};
 
-class Language {
-    constructor (lang) {
-        var obj = require('./' + lang + '.json');
+langCodes.forEach(lang => {
+    var obj = require('./' + lang + '.json');
 
-        this.constants = Object.freeze(obj);
+    constants[lang] = Object.freeze(obj);
+});
+
+export default {
+    translate (key, ...values) {
+        var str = constants[config.lang][key] || key;
+
+        values.forEach((value, i) => {
+            str = str.replace(new RegExp(`{${i}}`, 'g'), value);
+        });
+
+        return str;
     }
-}
-
-export default Language;
+};

@@ -1,0 +1,12 @@
+{
+  "register.username.title": "Email",
+  "register.password.title": "Password",
+  "register.email.title": "Email",
+  "register.firstName.title": "First name",
+  "register.lastName.title": "Last name",
+
+  "register.validation.errorMessage.username.valueMissing": "Username must be populated",
+  "register.validation.errorMessage.username.tooShort": "Username is too short",
+  "register.validation.errorMessage.username.tooLong": "Username is too long",
+  "register.validation.errorMessage.username.patternMismatch": "Bad username value"
+}
