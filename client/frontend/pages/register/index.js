@@ -2,7 +2,11 @@ import React, {PropTypes} from 'react';
 import PageComponent from 'core/page-component';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import * as actions from 'actions/register-actions';
+
+import language from 'constants/languages';
+
 import LogoComponent from 'core/logo';
 import FileUploadComponent from 'core/file-upload';
 
@@ -15,16 +19,34 @@ class RegisterPage extends PageComponent {
         this.state = {};
     }
 
-    changeGoro () {
-        this.props.actions.goro('2323');
-    }
-
     removeEmptyClass (field) {
         this.props.actions.setVisited(field.name);
     }
 
-    handleFieldChange (event) {
+    removeAllEmptyClass () {
+        this.props.actions.setAllVisited();
+    }
 
+    handleFieldChange (field, event) {
+        var validity = event.target.validity;
+        var errorMessage;
+
+        if (!validity.valid) {
+            if (validity.valueMissing) {
+                errorMessage = language.translate('register.validation.errorMessage.valueMissing', field.title);
+            }
+            if (validity.tooShort) {
+                errorMessage = language.translate('register.validation.errorMessage.tooShort', field.title);
+            }
+            if (validity.tooLong) {
+                errorMessage = language.translate('register.validation.errorMessage.tooLong', field.title);
+            }
+            if (validity.patternMismatch) {
+                errorMessage = language.translate('register.validation.errorMessage.patternMismatch', field.title);
+            }
+
+            this.props.actions.setErrorMessage(field.name, errorMessage);
+        }
     }
 
     createInputClass (field) {
@@ -36,11 +58,10 @@ class RegisterPage extends PageComponent {
 
         return fields.map(field => {
             return (
-                <div className="register-form_field" key={field.name}
-                     onBlur={this.removeEmptyClass.bind(this, field)} onChange={this.handleFieldChange.bind(this)}>
-
+                <div className="register-form_field" key={field.name}>
                     <input className={this.createInputClass(field)} type={field.type}
-                           required minLength={field.minLength} maxLength={field.maxLength} pattern={field.pattern}/>
+                           required minLength={field.minLength} maxLength={field.maxLength} pattern={field.pattern}
+                           onBlur={this.removeEmptyClass.bind(this, field)} onChange={this.handleFieldChange.bind(this, field)}/>
                     <span className="register-form_field_label">{field.title}</span>
                     <span className="register-form_field_error">{field.errorMessage}</span>
                 </div>
@@ -57,7 +78,7 @@ class RegisterPage extends PageComponent {
                         <span className="register-logo_small">Registration</span>
                     </div>
 
-                    <form className="register-form" ref="form" onBlur={this.removeEmptyClass.bind(this)}>
+                    <form className="register-form" ref="form">
                         {this.renderFields()}
 
                         <div className="register-form_field col-70 stick">
@@ -78,7 +99,7 @@ class RegisterPage extends PageComponent {
                             <FileUploadComponent />
                         </div>
 
-                        <button className="register-form_submit">Submit</button>
+                        <button className="register-form_submit" onClick={this.removeAllEmptyClass.bind(this)}>Submit</button>
                     </form>
                 </div>
             </div>

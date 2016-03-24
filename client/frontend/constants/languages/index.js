@@ -14,7 +14,7 @@ export default {
         var str = constants[config.lang][key] || key;
 
         values.forEach((value, i) => {
-            str = str.replace(new RegExp(`{${i}}`, 'g'), value);
+            str = str.replace(new RegExp(`\\{${i}\\}`, 'g'), value);
         });
 
         return str;
