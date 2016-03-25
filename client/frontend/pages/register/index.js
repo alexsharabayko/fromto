@@ -9,6 +9,7 @@ import language from 'constants/languages';
 
 import LogoComponent from 'core/logo';
 import FileUploadComponent from 'core/file-upload';
+import PhotoCutterView from 'core/photo-cutter';
 
 import './style.less';
 
@@ -69,6 +70,19 @@ class RegisterPage extends PageComponent {
         });
     }
 
+    onSelectImage (files) {
+        new PhotoCutterView({
+            image: files[0]
+        }).then(this.setBounds.bind(this));
+    }
+
+    setBounds (bounds) {
+        this.refs.mainImageX.value = bounds.x;
+        this.refs.mainImageY.value = bounds.y;
+        this.refs.mainImageWidth.value = bounds.width;
+        this.refs.mainImageHeight.value = bounds.height;
+    }
+
     render() {
         return (
             <div className="register">
@@ -96,7 +110,11 @@ class RegisterPage extends PageComponent {
                         </div>
 
                         <div className="register-form_field col-30">
-                            <FileUploadComponent />
+                            <FileUploadComponent onSelect={this.onSelectImage.bind(this)}/>
+                            <input type="hidden" name="mainImageX" ref="mainImageX" />
+                            <input type="hidden" name="mainImageY" ref="mainImageY" />
+                            <input type="hidden" name="mainImageWidth" ref="mainImageWidth" />
+                            <input type="hidden" name="mainImageHeight" ref="mainImageHeight" />
                         </div>
 
                         <button className="register-form_submit" onClick={this.removeAllEmptyClass.bind(this)}>Submit</button>

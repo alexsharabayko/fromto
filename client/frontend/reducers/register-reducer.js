@@ -64,7 +64,7 @@ var setVisited = function (state, action) {
     return newState;
 };
 
-var setAllVisited = function (state, action) {
+var setAllVisited = function (state) {
     return Object.assign({}, state, {
         fields: state.fields.map(field => Object.assign(field, { visited: true }))
     });
@@ -87,7 +87,7 @@ export default function (state = initialState, action = {}) {
             return setVisited(state, action);
 
         case 'SET_ALL_VISITED':
-            return setAllVisited(state, action);
+            return setAllVisited(state);
 
         case 'SET_ERROR_MESSAGE':
             return setErrorMessage(state, action);
