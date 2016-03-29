@@ -1,10 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import { Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+
+import config from 'config';
 
 import HomePage from './pages/home';
 import RegisterPage from './pages/register';
@@ -24,8 +26,8 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 
 ReactDOM.render(
-    <Provider store={store}>
-        <Router history={history}>
+    <Provider store={config.store}>
+        <Router history={config.history}>
             <Route path="/" component={HomePage} />
             <Route path="/register" component={RegisterPage} />
             <Route path="*" component={HomePage} />

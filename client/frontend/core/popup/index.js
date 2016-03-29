@@ -7,10 +7,6 @@ let popupContainer = document.querySelector('.popup-container'),
     component = null;
 
 class PopupElement extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     static getBoundsFromElement(bounds) {
         var bindElementBounds = bounds.bindElement.getBoundingClientRect(),
             defBounds = {

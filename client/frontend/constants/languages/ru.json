@@ -1,4 +1,12 @@
 {
-  "Hello": "World",
-  "Some key": 22
+  "register.username.title": "Имя пользователя",
+  "register.password.title": "Пароль",
+  "register.email.title": "Электронная почта",
+  "register.firstName.title": "Имя",
+  "register.lastName.title": "Фамилия",
+
+  "register.validation.errorMessage.valueMissing": "Поле {0} должно быть заполнено",
+  "register.validation.errorMessage.tooShort": "{0} слишком короткое",
+  "register.validation.errorMessage.tooLong": "{0} слишком длинное",
+  "register.validation.errorMessage.patternMismatch": "{0} имеет плохое значение"
 }

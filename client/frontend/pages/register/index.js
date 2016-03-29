@@ -9,7 +9,7 @@ import language from 'constants/languages';
 
 import LogoComponent from 'core/logo';
 import FileUploadComponent from 'core/file-upload';
-import PhotoCutterView from 'core/photo-cutter';
+import PhotoCorpView from 'core/photo-corp';
 
 import './style.less';
 
@@ -71,7 +71,7 @@ class RegisterPage extends PageComponent {
     }
 
     onSelectImage (files) {
-        new PhotoCutterView({
+        new PhotoCorpView({
             image: files[0]
         }).then(this.setBounds.bind(this));
     }
