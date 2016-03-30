@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
+import { Provider } from 'react-redux';
+import storeConfig from 'storeConfig';
+
 import './style.less';
 
 let popupContainer = document.querySelector('.popup-container'),
@@ -134,12 +137,15 @@ class PopupElement extends React.Component {
 
 class PopupView {
     constructor(options) {
-        component = ReactDom.render(<PopupElement
-            customClass={options.customClass}
-            onClose={options.onClose}
-            buttons={options.buttons}
-            bounds={options.bounds}
-            data={options.data}/>, popupContainer);
+        component = ReactDom.render(
+            <Provider store={storeConfig.store}>
+                <PopupElement
+                customClass={options.customClass}
+                onClose={options.onClose}
+                buttons={options.buttons}
+                bounds={options.bounds}
+                data={options.data}/>
+            </Provider>, popupContainer);
     }
 
     close () {

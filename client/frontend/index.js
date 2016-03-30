@@ -5,8 +5,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-
-import config from 'config';
+import storeConfig from 'storeConfig';
 
 import HomePage from './pages/home';
 import RegisterPage from './pages/register';
@@ -15,19 +14,9 @@ import reducers from './reducers';
 
 import './less/common.less';
 
-const store = createStore(
-    combineReducers({
-        ...reducers,
-        routing: routerReducer
-    })
-);
-
-const history = syncHistoryWithStore(browserHistory, store);
-
-
 ReactDOM.render(
-    <Provider store={config.store}>
-        <Router history={config.history}>
+    <Provider store={storeConfig.store}>
+        <Router history={storeConfig.history}>
             <Route path="/" component={HomePage} />
             <Route path="/register" component={RegisterPage} />
             <Route path="*" component={HomePage} />
