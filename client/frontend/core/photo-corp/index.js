@@ -9,7 +9,7 @@ import PhotoCutterComponent from './component';
 
 import './style.less';
 
-class PhotoCutterView {
+class PhotoCorpView {
     constructor (options) {
         return new Promise((resolve, reject) => {
             new PopupView({
@@ -45,4 +45,4 @@ class PhotoCutterView {
     }
 }
 
-export default PhotoCutterView;
+export default PhotoCorpView;
